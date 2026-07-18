@@ -1,0 +1,69 @@
+/* =======================================
+   التنسيق العام لجميع صفحات الموقع
+   ======================================= */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #EAF6FF url("images/2.jpg") no-repeat center center fixed; /* الخلفية الافتراضية للموقع */
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    direction: rtl;
+}
+
+/* تنسيق خاص بالشاشة الأولى فقط لعرض الصورة الخلفية الأولى */
+body.welcome-page {
+    background: #EAF6FF url("images/1.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* تنسيق خاص بصفحة الدراسة لعرض الصورة الخلفية الأولى */
+body.study-page {
+    background: #EAF6FF url("images/1.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* =======================================
+   تنسيق حاوية المحتوى والعناصر الداخلية
+   ======================================= */
+.container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.95); /* خلفية بيضاء شفافة وجميلة */
+    padding: 40px;
+    border-radius: 25px;
+    width: 90%;
+    max-width: 450px; 
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #4A6FA5;
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #6B7C93;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+button {
+    background-color: #7BC8A4;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 22px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #68B38B;
+    transform: scale(1.03);
+}

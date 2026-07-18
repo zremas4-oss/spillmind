@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - SpellMind</title>
+    <!-- استدعاء ملف التنسيق الخارجي لتطبيق القواعد العامة الموحدة للـ body -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* التعديلات والإضافات الخاصة بصفحة تسجيل الدخول فقط */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border: 4px solid #4A6FA5;
+            max-width: 500px;
+            width: 90%;
+            box-sizing: border-box;
+        }
+        
+        .character-selection {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .char-card {
+            border: 3px solid transparent;
+            border-radius: 20px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #ffffff;
+            width: 130px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        
+        .char-card img {
+    width: 100%;
+    height: 120px;       /* توحيد الارتفاع لجميع الصور */
+    object-fit: contain; /* يمنع تشويه أو تمطيط الصورة ويحافظ على أبعادها */
+    border-radius: 15px;
+    display: block;
+           }
+        
+        .char-card p {
+            font-size: 16px;
+            margin: 8px 0 0 0;
+            font-weight: bold;
+            color: #4A6FA5; /* توحيد لون النص مع الهوية البصرية */
+        }
+        
+        .char-card.selected {
+            border-color: #7BC8A4;
+            box-shadow: 0 0 15px rgba(123, 200, 164, 0.6);
+            transform: scale(1.05);
+        }
+        
+        /* جعل مربع الإدخال متناسقاً وحجمه مناسباً للأطفال */
+        input[type="text"] {
+            padding: 12px 20px;
+            font-size: 18px;
+            border: 2px solid #B0D4DE;
+            border-radius: 15px;
+            width: 100%; /* تمديد العرض ليتناسق مع الحاوية والزر */
+            max-width: 320px;
+            text-align: center;
+            outline: none;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4A6FA5;
+        }
+
+        h3 {
+            color: #4A6FA5;
+            margin-top: 25px;
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>مرحبًا بك 👋</h1>
+    <p>أدخل اسمك للبدء في الرحلة</p>
+    
+    <input id="username" type="text" placeholder="اكتب اسمك هنا">
+
+    <h3>اختر صديقك في الرحلة 🚀</h3>
+
+    <div class="character-selection">
+        <div class="char-card" id="boy-card" onclick="selectCharacter('boy')">
+            <img src="images/boy.jpg" alt="المستكشف كرم">
+            <p>كرم 👦</p>
+        </div>
+        <div class="char-card" id="girl-card" onclick="selectCharacter('girl')">
+            <img src="images/girl.jpg" alt="المستكشفة لولو">
+            <p>ليلى 👧</p>
+        </div>
+    </div>
+
+    <p id="choice" style="color: #7BC8A4; font-weight: bold; min-height: 24px; margin: 15px 0; font-size: 18px;"></p>
+    
+    <!-- الزر هنا سيرث الخصائص الجميلة لـ button من ملف style.css تلقائياً -->
+    <button onclick="startGame()">انطلق إلى الفضاء 🚀</button>
+</div>
+
+<script>
+let selectedCharacter = "";
+
+function selectCharacter(character){
+    selectedCharacter = character;
+    document.getElementById("boy-card").classList.remove("selected");
+    document.getElementById("girl-card").classList.remove("selected");
+
+    if(character == "boy"){
+        document.getElementById("boy-card").classList.add("selected");
+        document.getElementById("choice").innerHTML = "أنت مستعد للانطلاق مع كرم! 👦";
+    } else {
+        document.getElementById("girl-card").classList.add("selected");
+        document.getElementById("choice").innerHTML = "أنتِ مستعدة للانطلاق مع ليلى ! 👧";
+    }
+}
+
+function startGame(){
+    let name = document.getElementById("username").value.trim();
+    if(name == "" || selectedCharacter == ""){
+        alert("الرجاء كتابة اسمك واختيار صديقك في الرحلة أولاً! ✨");
+    } else {
+        localStorage.setItem("childName", name);
+        localStorage.setItem("character", selectedCharacter);
+        window.location.href = "planet.html";
+    }
+}
+</script>
+</body>
+</html>

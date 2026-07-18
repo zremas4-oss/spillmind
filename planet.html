@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خريطة الفضاء الدائرية - SpellMind</title>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #EAF6FF url('images/1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        /* جعل الحاوية شفافة بالكامل لكي تظهر النجوم خلف الكواكب مباشرة */
+        .container {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            max-width: 750px; 
+            width: 92%;
+            height: auto; 
+            padding: 25px;
+            box-sizing: border-box;
+            text-align: center;
+            position: relative;
+        }
+
+        /* حاوية الخريطة الدائرية الفضائية */
+        .planets-circle-map { 
+            position: relative;
+            width: 440px;
+            height: 440px;
+            margin: 40px auto 0 auto;
+            border: 3px dashed #B0D4DE; 
+            border-radius: 50%;
+        }
+
+        /* تنسيق موحد لعناصر الكواكب */
+        .planet-item {
+            position: absolute;
+            width: 100px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            margin-left: -50px; 
+            margin-top: -50px;
+        }
+
+        /* توزيع الزوايا لكل كوكب هندسياً */
+        .p1 { top: 50%; left: 100%; } 
+        .p2 { top: 85%; left: 85%; }  
+        .p3 { top: 100%; left: 50%; } 
+        .p4 { top: 85%; left: 15%; }  
+        .p5 { top: 50%; left: 0%; }    
+        .p6 { top: 15%; left: 15%; }  
+        .p7 { top: 0%; left: 50%; }    
+        .p8 { top: 15%; left: 85%; }  
+
+        .img-wrapper {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4); /* تعميق ظل الكواكب لتبرز فوق الفضاء */
+            position: relative;
+        }
+
+        /* ألوان كرتونية خلفية بديلة تضمن ظهور شكل الكواكب حتى لو مسار الصورة به خطأ */
+        .p1 .img-wrapper { background: #4fc3f7; } 
+        .p2 .img-wrapper { background: #ff8a80; } 
+        .p3 .img-wrapper { background: #ffb74d; } 
+        .p4 .img-wrapper { background: #ba68c8; } 
+        .p5 .img-wrapper { background: #4db6ac; } 
+        .p6 .img-wrapper { background: #fff176; } 
+        .p7 .img-wrapper { background: #a1887f; } 
+        .p8 .img-wrapper { background: #90a4ae; } 
+
+        .planet-open { cursor: pointer; }
+        .planet-open .img-wrapper { border: 4px solid #7BC8A4; }
+        .planet-open:hover { transform: scale(1.15); }
+
+        .planet-locked { cursor: not-allowed; opacity: 0.8; }
+        .planet-locked .img-wrapper { border: 4px solid #95a5a6; }
+
+        /* طبقة القفل الشفافة فوق صورة الكوكب المغلق */
+        .lock-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 22px;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        /* جعل الصورة تملأ الدائرة بالكامل */
+        .img-wrapper img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 1;
+        }
+
+        /* تعديل نصوص أسماء الكواكب للأبيض مع إضافة ظل واضح لسهولة القراءة */
+        .planet-item p {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+            margin: 8px 0 0 0;
+            white-space: nowrap;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9);
+        }
+
+        /* تنسيقات العناوين العلوية لتتناسب مع الفضاء */
+        .container h2 {
+            color: #ffffff !important;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+        }
+
+        .container p.subtitle {
+            font-size: 18px; 
+            color: #EAF6FF; 
+            margin: 8px 0 0 0;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 style="margin: 0; font-size: 28px;">مرحباً يا <span id="child-name-span" style="color: #7BC8A4;">المستكشف</span>! 👋</h2>
+    <p class="subtitle">اتبع مدار السهم واضغط على الكوكب الأول لبدء الرحلة 🌌</p>
+    
+    <div class="planets-circle-map">
+        
+        <!-- الكوكب 1: كوكب الأرض المفتوح -->
+        <div class="planet-item planet-open p1" onclick="startPlanet(1)">
+            <div class="img-wrapper">
+                <img src="images/11.jpg" alt="كوكب المغامرة" onerror="this.style.display='none'">
+            </div>
+            <p>1️⃣ كوكب المغامرة 🌍</p>
+        </div>
+
+        <!-- الكوكب 2: المريخ (مغلق) -->
+        <div class="planet-item planet-locked p2" onclick="checkUnlock(2)">
+            <div class="img-wrapper">
+                <img src="images/22.jpg" onerror="this.style.display='none'">
+                <div class="lock-overlay">🔒</div>
+            </div>
+            <p>2️⃣ كوكب التحدي</p>
+        </div>
+
+        <!-- الكوكب 3: المشتري (مغلق) -->
+        <div class="planet-item planet-locked p3" onclick="checkUnlock(3)">
+            <div class="img-wrapper">
+                <img src="images/33.jpg" onerror="this.style.display='none'">
+                <div class="lock-overlay">🔒</div>
+            </div>
+            <p>3️⃣ كوكب الاستكشاف</p>
+        </div>
+
+        <!-- الكوكب 4 -->
+        <div class="planet-item planet-locked p4" onclick="checkUnlock(4)">
+            <div class="img-wrapper">
+                <img src="images/44.jpg" onerror="this.style.display='none'"><div class="lock-overlay">🔒</div>
+            </div>
+            <p>4️⃣ كوكب التميز</p>
+        </div>
+
+        <!-- الكوكب 5 -->
+        <div class="planet-item planet-locked p5" onclick="checkUnlock(5)">
+            <div class="img-wrapper">
+                <img src="images/55.jpg" onerror="this.style.display='none'"><div class="lock-overlay">🔒</div>
+            </div>
+            <p>5️⃣ كوكب الإبداع</p>
+        </div>
+
+        <!-- الكوكب 6 -->
+        <div class="planet-item planet-locked p6" onclick="checkUnlock(6)">
+            <div class="img-wrapper">
+                <img src="images/66.jpg" onerror="this.style.display='none'"><div class="lock-overlay">🔒</div>
+            </div>
+            <p>6️⃣ كوكب البطولة</p>
+        </div>
+
+        <!-- الكوكب 7 -->
+        <div class="planet-item planet-locked p7" onclick="checkUnlock(7)">
+            <div class="img-wrapper">
+                <img src="images/77.jpg" onerror="this.style.display='none'"><div class="lock-overlay">🔒</div>
+            </div>
+            <p>7️⃣ كوكب المعرفة</p>
+        </div>
+
+        <!-- الكوكب 8 -->
+        <div class="planet-item planet-locked p8" onclick="checkUnlock(8)">
+            <div class="img-wrapper">
+                <img src="images/88.jpg" onerror="this.style.display='none'"><div class="lock-overlay">🔒</div>
+            </div>
+            <p>8️⃣ كوكب النجاح</p>
+        </div>
+
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    let savedName = localStorage.getItem("childName");
+    if (savedName) {
+        document.getElementById("child-name-span").innerText = savedName;
+    }
+});
+
+function startPlanet(planetId) {
+    alert("استعد! نحن الآن في طريقنا إلى كوكب المغامرة 🚀");
+    window.location.href = "study.html"; 
+}
+
+function checkUnlock(planetId) {
+    alert("هذا الكوكب مغلق حالياً! يجب عليك إنهاء كوكب المغامرة أولاً لفتح باقي الكواكب 🚀✨");
+}
+</script>
+
+</body>
+</html>
