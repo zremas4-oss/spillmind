@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>واجهة التدريس - SpellMind</title>
+    <link rel="stylesheet" href="study.css">
+    <style>
+        /* إخفاء كافة الأقسام تلقائياً لضمان عدم نزول الصفحة لأسفل */
+        .pageSection { display: none; width: 100%; }
+        /* إظهار القسم النشط فقط */
+     
+        
+        /* تحسين مظهر الكاميرا والفيديو لمنع ظهور شاشة سوداء مزعجة */
+        .videoBox, .cameraBox {
+            width: 100%;
+            background: #1a202c;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            aspect-ratio: 16 / 9;
+        }
+        /* تنسيق كروت الكلمات والمقاطع بجانب بعضها لترتيب أنيق */
+        .cards-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .item-card {
+            background: #f7fafc;
+            border: 2px solid #edf2f7;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="study-page">
+
+<div class="container">
+    
+    <!-- شريط التقدم العلوي الذكي للطفل -->
+    <div class="progressBar">
+        <div class="step active" id="step0">الحرف <span>⭐</span></div>
+        <div class="step" id="step1">المقاطع <span>⭐</span></div>
+        <div class="step" id="step2">الكلمات <span>⭐</span></div>
+        <div class="step" id="step3">لعبة الذاكرة <span>⭐</span></div>
+    </div>
+
+    <!-- ======================================= -->
+    <!-- الصفحة 1: نطق الحرف ومشاهدة الطريقة -->
+    <!-- ======================================= -->
+<div id="section0" class="pageSection active">
+<div class="bigLetter">ب</div>
+
+<div class="letterForms">
+<div>بـ</div>
+<div>ـبـ</div>
+<div>ب</div>
+</div>
+
+<button id="playLetter">🔊 استمع للحرف</button>
+
+<button id="startMicBtn">🎤 ابدأ التحدث</button>
+
+
+<p id="practiceMessage" style="font-size: 16px; font-weight: bold; color: #4A6FA5; margin: 10px 0;"></p> 
+       <!-- صندوق فيديو طريقة النطق (يظهر هنا فقط) -->
+        <h3 style="color: #4A6FA5; font-size: 18px; margin-top: 15px;">🎥 شاهد طريقة نطق الحرف</h3>
+        <div class="videoBox">
+            <video id="letterVideo" controls></video>
+        </div>
+
+<!-- زر تشغيل الكاميرا الجديد -->
+<button id="openCamera" style="background-color: #4A6FA5; color: white; padding: 10px; border-radius: 10px; margin-bottom: 10px;">🎥 اضغط هنا لترى نفسك وتقلدني</button>
+
+<!-- حاوية الكاميرا (ستظهر بمجرد الضغط) -->
+<div id="cameraContainer" style="display: none; margin-bottom: 20px;">
+    <video id="cameraView" autoplay playsinline style="width: 100%; border-radius: 15px; transform: scaleX(-1); border: 3px solid #7BC8A4;"></video>
+</div>
+    </div>
+
+    <!-- ======================================= -->
+    <!-- الصفحة 2: تعلم المقاطع الصوتية -->
+    <!-- ======================================= -->
+    <div id="section1" class="pageSection">
+        <h2>🎶 مقاطع الحرف (ب)</h2>
+        <div class="cards-grid">
+            <div class="item-card">
+                <h3 style="font-size: 32px; color: #4A6FA5; margin-bottom: 10px;">با</h3>
+                <button class="playSyllable" onclick="new Audio('audio/baa.mp3').play()" style="padding: 10px; font-size: 16px;">🔊 استمع</button>
+                <button class="saySyllable" data-text="با" style="padding: 10px; font-size: 16px; background-color: #4A6FA5;">🎤 انطق</button>
+            </div>
+            <div class="item-card">
+                <h3 style="font-size: 32px; color: #4A6FA5; margin-bottom: 10px;">بو</h3>
+                <button class="playSyllable" onclick="new Audio('audio/boo.mp3').play()" style="padding: 10px; font-size: 16px;">🔊 استمع</button>
+                <button class="saySyllable" data-text="بو" style="padding: 10px; font-size: 16px; background-color: #4A6FA5;">🎤 انطق</button>
+            </div>
+            <div class="item-card">
+                <h3 style="font-size: 32px; color: #4A6FA5; margin-bottom: 10px;">بي</h3>
+                <button class="playSyllable" onclick="new Audio('audio/bee.mp3').play()" style="padding: 10px; font-size: 16px;">🔊 استمع</button>
+                <button class="saySyllable" data-text="بي" style="padding: 10px; font-size: 16px; background-color: #4A6FA5;">🎤 انطق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================= -->
+    <!-- الصفحة 3: تعلم الكلمات وصورها -->
+    <!-- ======================================= -->
+    <div id="section2" class="pageSection">
+        <h2>📦 كلمات تبدأ بحرف الـ ب</h2>
+        <div class="cards-grid">
+            <div class="item-card">
+                <img src="images/bab.jpg" alt="باب" style="width: 100px; height: 100px; object-fit: contain; margin-bottom: 10px;">
+                <h3 style="color: #4A6FA5;">بَاب</h3>
+                <button class="playWord" data-text="باب" style="padding: 10px; font-size: 16px;">🔊 استمع</button>
+            </div>
+        </div>
+    </div>
+
+<div id="section22" class="pageSection">
+        <h2>📦 كلمات تبدأ بحرف الـ ب</h2>
+        <div class="cards-grid">
+            <div class="item-card">
+                <img src="images/bata.jpg" alt="بطة" style="width: 100px; height: 100px; object-fit: contain; margin-bottom: 10px;">
+                <h3 style="color: #4A6FA5;">بَطة</h3>
+                <button class="playWord" data-text="بطة" style="padding: 10px; font-size: 16px;">🔊 استمع</button>
+            </div>
+        </div>
+    </div>
+    <div id="section33" class="pageSection">
+        <h2>📦 كلمات تبدأ بحرف الـ ب</h2>
+        <div class="cards-grid">
+            <div class="item-card">
+                <img src="images/bayte.jpg" alt="بيت" style="width: 100px; height: 100px; object-fit: contain; margin-bottom: 10px;">
+                <h3 style="color: #4A6FA5;">بَيت</h3>
+                <button class="playWord" data-text="بيت" style="padding: 10px; font-size: 16px;">🔊 استمع</button>
+            </div>
+        </div>
+    </div>
+<p id="speechResult" style="font-size: 20px; text-align: center; margin-top: 15px; min-height: 30px;"></p>
+    <!-- ======================================= -->
+    <!-- الصفحة 4: لعبة الذاكرة المطابقة -->
+    <!-- ======================================= -->
+    <div id="section3" class="pageSection">
+        <h2>🧠 لعبة طابق بطاقات الحرف</h2>
+        <div class="memoryGame">
+            <div class="card" data-card="ب">❓</div>
+            <div class="card" data-card="بَاب">❓</div>
+            <div class="card" data-card="ب">❓</div>
+            <div class="card" data-card="بَـ">❓</div>
+            <div class="card" data-card="بَاب">❓</div>
+            <div class="card" data-card="بَـ">❓</div>
+        </div>
+        <button id="restartGame" style="background-color: #4A6FA5; font-size: 16px; padding: 10px;">🔄 إعادة اللعبة</button>
+    </div>
+
+    <!-- ======================================= -->
+    <!-- واجهة الإنهاء والنجاح والتكريم -->
+    <!-- ======================================= -->
+    <div id="finishSection" class="pageSection">
+        <h1 style="font-size: 50px;">🏆🌟</h1>
+        <h2>عمل رائع يا <span id="finishName">البطل</span>!</h2>
+        <p>لقد أنهيت التدريب على حرف الباء بنجاح مذهل!</p>
+        <button id="goPlanet" style="background-color: #7BC8A4;">🚀 العودة لخريطة الكواكب</button>
+    </div>
+
+    <!-- --------------------------------------- -->
+    <!-- الجزء السفلي: الشخصية وأزرار التحكم الثابتة -->
+    <!-- --------------------------------------- -->
+    <div class="teacherBox" style="margin-top: 25px;">
+    <!-- إذا كانت الصورة داخل مجلد image واسمها girl.jpg ستظهر فوراً -->
+    <img id="teacherImage" src="images/girl.jpg" alt="الشخصية المساعدة" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
+    <div class="speech">
+        <p id="teacherText">أهلاً بك يا بطل ✨ سأساعدك على تعلم الحرف خطوة بخطوة.</p>
+    </div>
+</div>
+
+    <!-- أزرار التنقل بين الصفحات (صفحة ورا صفحة) -->
+    <div class="navigation">
+        <button id="previousButton" style="background-color: #a0aec0; display: none;">⬅️ السابق</button>
+        <button id="nextButton">التالي ➡️</button>
+    </div>
+
+</div>
+
+<script src="study.js"></script>
+</body>
+</html>
